@@ -17,7 +17,7 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": "systems"
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1710146030,
@@ -67,6 +67,26 @@
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "ocf-greeter": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": "systems"
+      },
+      "locked": {
+        "dirtyRev": "b2be0378123ad8f2578cd6501b3afb3905a22071-dirty",
+        "dirtyShortRev": "b2be037-dirty",
+        "lastModified": 1728376507,
+        "narHash": "sha256-fNlpyBiLv8almJRzJWsXuIl77Sp0eFXvJ1J+sBNpsDk=",
+        "type": "git",
+        "url": "file:///Users/oliver/Development/github.com/ocf/greeter"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///Users/oliver/Development/github.com/ocf/greeter"
       }
     },
     "ocf-pam-trimspaces": {
@@ -155,11 +175,12 @@
       "inputs": {
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
+        "ocf-greeter": "ocf-greeter",
         "ocf-pam-trimspaces": "ocf-pam-trimspaces",
         "ocf-sync-etc": "ocf-sync-etc",
         "ocf-utils": "ocf-utils",
         "ocflib": "ocflib_2",
-        "systems": "systems_2",
+        "systems": "systems_3",
         "wayout": "wayout"
       }
     },
@@ -208,13 +229,28 @@
         "type": "github"
       }
     },
+    "systems_4": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "wayout": {
       "inputs": {
         "crane": "crane",
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": "systems_3"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1729631936,

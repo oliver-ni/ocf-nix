@@ -16,6 +16,10 @@
       url = "github:ocf/utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ocf-greeter = {
+      url = "git+file:///Users/oliver/Development/github.com/ocf/greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     wayout = {
       url = "github:ocf/wayout";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,6 +35,7 @@
     , ocf-sync-etc
     , ocf-pam-trimspaces
     , ocf-utils
+    , ocf-greeter
     , wayout
     }@inputs:
     let
@@ -44,6 +49,7 @@
         ocf-sync-etc.overlays.default
         ocf-pam-trimspaces.overlays.default
         nix-index-database.overlays.nix-index
+        ocf-greeter.overlays.default
 
         # GNOME 46: triple-buffering-v4-46
         # See: https://nixos.wiki/wiki/GNOME#Dynamic_triple_buffering

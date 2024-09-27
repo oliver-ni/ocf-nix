@@ -15,6 +15,12 @@ let
       openssh = pkgs.openssh_gssapi;
     };
   };
+
+  # swayConfig = pkgs.writeText "sway-config" ''
+  #   # exec systemctl --user import-environment
+  #   exec "${lib.getExe pkgs.kitty}; swaymsg exit"
+  #   # exec "/nix/store/gpf5b6m2rnaqk4i82383b70a356jz2mf-ocf-greeter-2024-10-08/bin/ocf-greeter; swaymsg exit"
+  # '';
 in
 {
   options.ocf.graphical = {
@@ -24,16 +30,17 @@ in
   config = lib.mkIf cfg.enable {
     security.pam = {
       # Mount ~/remote
-      services.login.pamMount = true;
-      services.login.rules.session.mount.order = config.security.pam.services.login.rules.session.krb5.order + 50;
-      mount.extraVolumes = [ ''<volume fstype="fuse" path="${lib.getExe sshfs}#%(USER)@tsunami:" mountpoint="~/remote/" options="follow_symlinks,UserKnownHostsFile=/dev/null,StrictHostKeyChecking=no" pgrp="ocf" />'' ];
+      # services.greetd.pamMount = true;
+      # services.greetd.makeHomeDir = true;
+      # services.greetd.rules.session.mount.order = config.security.pam.services.login.rules.session.krb5.order + 50;
+      # mount.extraVolumes = [ ''<volume fstype="fuse" path="${lib.getExe sshfs}#%(USER)@tsunami:" mountpoint="~/remote/" options="follow_symlinks,UserKnownHostsFile=/dev/null,StrictHostKeyChecking=no" pgrp="ocf" />'' ];
 
-      # Trim spaces from username
-      services.login.rules.auth.trimspaces = {
-        control = "requisite";
-        modulePath = "${pkgs.ocf-pam_trimspaces}/lib/security/pam_trimspaces.so";
-        order = 0;
-      };
+      # # Trim spaces from username
+      # services.greetd.rules.auth.trimspaces = {
+      #   control = "requisite";
+      #   modulePath = "${pkgs.ocf-pam_trimspaces}/lib/security/pam_trimspaces.so";
+      #   order = 0;
+      # };
 
       # This contains a bunch of KDE, etc. configs
       makeHomeDir.skelDirectory = "/etc/skel";
@@ -77,33 +84,40 @@ in
     fonts.packages = with pkgs; [ meslo-lgs-nf noto-fonts noto-fonts-cjk-sans noto-fonts-extra ];
 
     services = {
-      # KDE Plasma is our primary DE, but have others available
       desktopManager.plasma6.enable = true;
-      xserver.desktopManager = {
-        gnome.enable = true;
-        xfce.enable = true;
-      };
 
-      displayManager = {
-        defaultSession = "plasma";
+      xserver = {
+        enable = true;
 
-        sddm = {
-          enable = true;
-          theme = "catppuccin-latte";
-          wayland.enable = true;
-          settings.Users = {
-            RememberLastUser = false;
-            RememberLastSession = false;
-          };
+        desktopManager = {
+          # KDE Plasma is our primary DE, but have others available
+          gnome.enable = true;
+          xfce.enable = true;
+        };
+
+        displayManager = {
+          defaultSession = "plasma";
+
+          # lightdm = {
+          #   enable = true;
+          #   extraConfig = ''
+          #     [Seat:*]
+          #     greeter-hide-users=true
+          #     user-session=plasma
+          #   '';
+          # };
         };
       };
     };
 
-    # KDE 6.0.3 has a bug that breaks logging out within the first 60 seconds.
-    # This is caused by the DrKonqi service's ExecStartPre command, which sleeps
-    # for 60 seconds to let the system settle before monitoring coredumps. We
-    # don't need this wait, so we remove the ExecStartPre entry.
-    systemd.user.services.drkonqi-coredump-pickup.unitConfig.ExecStartPre = lib.mkForce [ ];
+    services.greetd = {
+      enable = true;
+      settings.default_session = {
+        # command = "${lib.getExe pkgs.sway} --config ${swayConfig} --unsupported-gpu";
+        command = "${lib.getExe pkgs.cage} -s -- systemd-cat -t ocf-greeter ${lib.getExe pkgs.ocf-greeter}";
+        # user = "root";
+      };
+    };
 
     systemd.user.services.wayout = {
       description = "Automatic idle logout manager";

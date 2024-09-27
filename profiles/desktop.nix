@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, ... }:
 
 # TODO: Move this to pkgs/ or come up with a better way to manage custom scripts
 let
