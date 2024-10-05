@@ -11,6 +11,9 @@ let
   ocf-tv = pkgs.hiPrio vncScript;
 in
 {
+  imports = [
+    ./desktop/lockkill.nix
+  ];
 
   # Colmena tagging
   deployment.tags = [ "desktop" ];
