@@ -15,14 +15,10 @@ let
       openssh = pkgs.openssh_gssapi;
     };
   };
-
-  swayConfig = pkgs.writeText "sway-config" ''
-    output * scale 2
-    default_border none
-    exec "systemd-cat -t ocf-greeter ${lib.getExe pkgs.ocf-greeter} --default-session plasma; swaymsg exit"
-  '';
 in
 {
+  imports = [ ./graphical/greeter.nix ];
+
   options.ocf.graphical = {
     enable = lib.mkEnableOption "Enable desktop environment configuration";
   };
@@ -60,14 +56,6 @@ in
 
     environment.systemPackages = with pkgs; [
       plasma-applet-commandoutput
-      (catppuccin-sddm.override {
-        themeConfig.General = {
-          FontSize = 12;
-          Background = "/etc/ocf-assets/images/login-newyear.png";
-          #Logo = "/etc/ocf-assets/images/penguin.svg";
-          CustomBackground = true;
-        };
-      })
       libreoffice
       vscode-fhs
       kitty
@@ -83,11 +71,8 @@ in
 
     fonts.packages = with pkgs; [ meslo-lgs-nf noto-fonts noto-fonts-cjk-sans noto-fonts-extra ];
 
-    programs.sway.enable = true;
-
     services = {
       displayManager.defaultSession = "plasma";
-
       desktopManager.plasma6.enable = true;
 
       xserver = {
@@ -100,12 +85,10 @@ in
       };
     };
 
-    services.greetd = {
+    ocf.graphical.greeter = {
       enable = true;
-      settings.default_session = {
-        command = "${lib.getExe pkgs.sway} --config ${swayConfig} --unsupported-gpu";
-        # command = "${lib.getExe pkgs.cage} -s -- systemd-cat -t ocf-greeter ${lib.getExe pkgs.ocf-greeter}";
-      };
+      background = "/etc/ocf-assets/images/login-newyear.png";
+      # logo = "/etc/ocf-assets/images/penguin.svg";
     };
 
     systemd.user.services.wayout = {

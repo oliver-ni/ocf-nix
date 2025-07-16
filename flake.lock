@@ -26,11 +26,11 @@
     },
     "crane": {
       "locked": {
-        "lastModified": 1737689766,
-        "narHash": "sha256-ivVXYaYlShxYoKfSo5+y5930qMKKJ8CLcAoIBPQfJ6s=",
+        "lastModified": 1738652123,
+        "narHash": "sha256-zdZek5FXK/k95J0vnLF0AMnYuZl4AjARq83blKuJBYY=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "6fe74265bbb6d016d663b1091f015e2976c4a527",
+        "rev": "c7e015a5fcefb070778c7d91734768680188a9cd",
         "type": "github"
       },
       "original": {
@@ -171,11 +171,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1738213533,
-        "narHash": "sha256-FP1PvzlDXau6SP8FilRpefxMsHclJSqNyEgGlgC+kRo=",
-        "ref": "c894beabed0698ff2b348ea09e0101831e0563be",
-        "rev": "c894beabed0698ff2b348ea09e0101831e0563be",
-        "revCount": 35,
+        "dirtyRev": "09d5f19c781dd11bd8c90373a6cec41726a99e54-dirty",
+        "dirtyShortRev": "09d5f19-dirty",
+        "lastModified": 1738808295,
+        "narHash": "sha256-x4enRvlLd6LNHVf2FRg7PotiF59P1sceLl5v+wP87yU=",
         "type": "git",
         "url": "file:///Users/oliver/Development/github.com/ocf/greeter"
       },
